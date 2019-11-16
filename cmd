@@ -1,0 +1,1 @@
+oc adm policy add-scc-to-user anyuid -z prom -n mon
