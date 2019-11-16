@@ -1,0 +1,23 @@
+rule_files:
+    - alerts.yml
+
+evaluation_interval: 1m
+
+tests:
+    # Test 1.
+    - interval: 1m
+      # Series data.
+      input_series:
+      - series: 'tomcat_global_error_total{app="api"}'
+        values: '2 2 2 2 2 2'
+
+      # Unit test for alerting rules.
+      alert_rule_test:
+      # Unit test 1.
+      - eval_time: 1m
+        alertname: HighErrorRate
+        exp_alerts:
+        - exp_labels:
+            app: api
+          exp_annotations:
+            description: "High error rate"

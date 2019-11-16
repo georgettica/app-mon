@@ -1,0 +1,10 @@
+groups:
+- name: test-rule
+  rules:
+  - alert: HighErrorRate
+    expr: sum(tomcat_global_error_total{app="api"}) > 1
+    for: 1m
+    labels:
+      app: api
+    annotations:
+      description: "High error rate"

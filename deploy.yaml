@@ -1,0 +1,173 @@
+# oc adm policy add-scc-to-user anyuid -z prom -n mon
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prom
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prom
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - services
+  - services/finalizers
+  - endpoints
+  - persistentvolumeclaims
+  - events
+  - configmaps
+  - secrets
+  verbs:
+  - '*'
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: prom
+subjects:
+- kind: ServiceAccount
+  name: prom
+  namespace: mon
+roleRef:
+  kind: ClusterRole
+  name: prom
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prom-rules
+data:
+  mytest-rules.yml: |
+    groups:
+    - name: test-rule
+      rules:
+      - alert: HighErrorRate
+        expr: sum(tomcat_global_error_total{app="api"}) > 1
+        for: 1m
+        labels:
+          app: api
+        annotations:
+          description: "High error rate"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prom-conf
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 5s
+      scrape_timeout: 3s
+      evaluation_interval: 5s
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets: []
+        scheme: http
+        timeout: 10s
+        api_version: v1
+
+    rule_files:
+    - "/tmp/prom-rules/mytest-rules.yml"
+
+    scrape_configs:
+    - job_name: prometheus
+      honor_timestamps: true
+      scrape_interval: 15s
+      scrape_timeout: 10s
+      metrics_path: /metrics
+      scheme: http
+      static_configs:
+      - targets:
+        - localhost:9090
+    - job_name: "my-k8s"
+      metrics_path: "/actuator/prometheus"
+      kubernetes_sd_configs:
+      - role: pod
+      relabel_configs:
+      - source_labels: [__meta_kubernetes_pod_annotation_prom_scarp]
+        action: keep
+        regex: true
+      - action: labelmap
+        regex: __meta_kubernetes_pod_label_(.+)
+      - source_labels: [__meta_kubernetes_namespace]
+        action: replace
+        target_label: kubernetes_namespace
+      - source_labels: [__meta_kubernetes_pod_name]
+        action: replace
+        target_label: kubernetes_pod_name
+
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: prom
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: prom
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prom
+spec:
+  selector:
+    app: prom
+  ports:
+  - name: http
+    port: 80
+    targetPort: 9090
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prom
+  labels:
+    app: prom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prom
+  template:
+    metadata:
+      labels:
+        app: prom
+    spec:
+      serviceAccountName: prom
+      containers:
+      - name: prom
+        image: prom/prometheus
+        command:
+        - /bin/prometheus
+        - --config.file=/tmp/prom-conf/prometheus.yml
+        - --storage.tsdb.path=/prometheus
+        - --web.console.libraries=/usr/share/prometheus/console_libraries
+        - --web.console.templates=/usr/share/prometheus/consoles
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: prom-conf
+          mountPath: /tmp/prom-conf
+        - name: prom-rules
+          mountPath: /tmp/prom-rules
+      volumes:
+      - name: prom-conf
+        configMap:
+          name: prom-conf
+      - name: prom-rules
+        configMap:
+          name: prom-rules
