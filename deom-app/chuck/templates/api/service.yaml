@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name:  {{ .Chart.Name }}
   namespace: "{{.Values.namespace}}"
+  labels:
+    appmon: service-yes
 spec:
   selector:
     app: {{ .Chart.Name }}

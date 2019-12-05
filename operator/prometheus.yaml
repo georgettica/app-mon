@@ -1,9 +1,52 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: appmon-prometheus
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: appmon-prometheus
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources:
+  - configmaps
+  verbs: ["get"]
+- nonResourceURLs: ["/metrics"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: appmon-prometheus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: appmon-prometheus
+subjects:
+- kind: ServiceAccount
+  name: appmon-prometheus
+  namespace: appmon
+---
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: prometheus
 spec:
-  serviceAccountName: appmon-prometheus-operator
+  serviceAccountName: appmon-prometheus
+  serviceMonitorNamespaceSelector:
+    matchExpressions:
+      - key: appmon
+        operator: In
+        values:
+        - "yes"
   serviceMonitorSelector:
     matchLabels:
       appmon: "service-yes"
