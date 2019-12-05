@@ -1,0 +1,32 @@
+kind: DeploymentConfig
+apiVersion: "v1"
+metadata:
+  labels:
+    app: {{ .Chart.Name }}
+  name: {{ .Chart.Name }}
+  namespace: chuck
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+        version: v1
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image }}
+          imagePullPolicy: Always
+          ports:
+            - containerPort: {{.Values.network.targetPort}}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: DB_HOST
+              value: "{{ .Values.db.host }}"
+            - name: DB_NAME
+              value: "{{ .Values.db.name }}"
+            - name: DB_USER
+              value: "{{ .Values.db.user }}"
+            - name: DB_PASS
+              value: "{{ .Values.db.pass }}"

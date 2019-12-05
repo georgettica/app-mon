@@ -1,0 +1,24 @@
+kind: DeploymentConfig
+apiVersion: "v1"
+metadata:
+  labels:
+    app: "chuck-ui"
+  name: "chuck-ui"
+  namespace: chuck
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "chuck-ui"
+        version: v1
+    spec:
+      containers:
+        - name: "chuck-ui"
+          image: "docker.io/dimssss/chuck-ui:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_URL
+              value: "http://{{.Values.network.apiHost}}"

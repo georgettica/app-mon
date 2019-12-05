@@ -1,0 +1,27 @@
+kind: DeploymentConfig
+apiVersion: "v1"
+metadata:
+  labels:
+    app: {{ .Chart.Name }}-mysql
+  name: {{ .Chart.Name }}-mysql
+  namespace: chuck
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-mysql
+    spec:
+      containers:
+        - name: mysql
+          image: registry.redhat.io/rhscl/mysql-57-rhel7:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_USER
+              value: "{{ .Values.db.user }}"
+            - name: MYSQL_PASSWORD
+              value: "{{ .Values.db.pass }}"
+            - name: MYSQL_DATABASE
+              value: "{{ .Values.db.name }}"

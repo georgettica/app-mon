@@ -1,0 +1,11 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: chuck-ui
+  namespace: chuck
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: chuck-ui
