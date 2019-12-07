@@ -1,0 +1,63 @@
+kind: Secret
+metadata:
+  name: appmon-alertmanager
+  namespace: appmon
+apiVersion: v1
+data:
+  alertmanager.yaml: Z2xvYmFsOgogIHJlc29sdmVfdGltZW91dDogNW0Kcm91dGU6CiAgZ3JvdXBfYnk6IFsnam9iJ10KICBncm91cF93YWl0OiAzMHMKICBncm91cF9pbnRlcnZhbDogNW0KICByZXBlYXRfaW50ZXJ2YWw6IDEyaAogIHJlY2VpdmVyOiAnd2ViaG9vaycKcmVjZWl2ZXJzOgotIG5hbWU6ICd3ZWJob29rJwogIHdlYmhvb2tfY29uZmlnczoKICAtIHVybDogJ2h0dHA6Ly9hbGVydG1hbmFnZXJ3aDozMDUwMC8nCg==
+type: Opaque
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  name: appmon-alertmanager
+spec:
+  replicas: 3
+  configSecret: appmon-alertmanager
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: alertmanager-storage
+        resources:
+          requests:
+            storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appmon-alertmanager
+spec:
+  ports:
+  - name: web
+    port: 9093
+    protocol: TCP
+    targetPort: web
+  selector:
+    alertmanager: example
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: appmon-alertmanager
+  namespace: appmon
+spec:
+  port:
+    targetPort: web
+  to:
+    kind: Service
+    name: appmon-alertmanager
+---
+# Use the following for creating an AlertManager secret
+# kubectl create secret generic alertmanager-example --from-file=alertmanager.yaml
+#global:
+#  resolve_timeout: 5m
+#route:
+#  group_by: ['job']
+#  group_wait: 30s
+#  group_interval: 5m
+#  repeat_interval: 12h
+#  receiver: 'webhook'
+#receivers:
+#- name: 'webhook'
+#  webhook_configs:
+#  - url: 'http://alertmanagerwh:30500/'

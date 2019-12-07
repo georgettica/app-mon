@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: appmon-prometheus
+    role: alert-rules
+  name: appmon-prometheus-example-rules
+spec:
+  groups:
+  - name: test-rule
+    rules:
+    - alert: HighErrorRate
+      expr: sum(tomcat_global_error_total{app="chuck"}) > 1
+      for: 1m
+      labels:
+        app: api
+      annotations:
+        description: "High error rate"
+#  - name: ./example.rules
+#    rules:
+#    - alert: ExampleAlert
+#      expr: vector(1)

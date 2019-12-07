@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prom1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /srv/nfs/user-vols/vol80
+    server: support1.none-c1b7.internal
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: prom-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prom2
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /srv/nfs/user-vols/vol82
+    server: support1.none-c1b7.internal
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: prom-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prom3
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /srv/nfs/user-vols/vol84
+    server: support1.none-c1b7.internal
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: prom-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: alert-manager-1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /srv/nfs/user-vols/vol80
+    server: support1.none-c1b7.internal
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: alertmanager-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: alert-manager-2
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /srv/nfs/user-vols/vol82
+    server: support1.none-c1b7.internal
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: alertmanager-storage
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: alert-manager-3
+spec:
+  accessModes:
+  - ReadWriteOnce
+  - ReadWriteMany
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /srv/nfs/user-vols/vol84
+    server: support1.none-c1b7.internal
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: alertmanager-storage
