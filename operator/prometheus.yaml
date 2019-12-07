@@ -40,6 +40,14 @@ kind: Prometheus
 metadata:
   name: prometheus
 spec:
+  replicas: 3
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: prom-storage
+        resources:
+          requests:
+            storage: 50Gi
   serviceAccountName: appmon-prometheus
   serviceMonitorNamespaceSelector:
     matchExpressions:
@@ -47,12 +55,21 @@ spec:
         operator: In
         values:
         - "yes"
+  alerting:
+    alertmanagers:
+    - namespace: appmon
+      name: appmon-alertmanager
+      port: web
   serviceMonitorSelector:
     matchLabels:
       appmon: "service-yes"
   podMonitorSelector:
     matchLabels:
       appmon: "pod-yes"
+  ruleSelector:
+    matchLabels:
+      role: alert-rules
+      prometheus: appmon-prometheus
   resources:
     requests:
       memory: 400Mi
