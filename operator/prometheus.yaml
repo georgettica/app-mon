@@ -55,6 +55,12 @@ spec:
         operator: In
         values:
         - "yes"
+  ruleNamespaceSelector:
+    matchExpressions:
+      - key: appmon
+        operator: In
+        values:
+        - "yes"
   alerting:
     alertmanagers:
     - namespace: appmon

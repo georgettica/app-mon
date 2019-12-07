@@ -33,7 +33,7 @@ spec:
     protocol: TCP
     targetPort: web
   selector:
-    alertmanager: example
+    alertmanager: appmon-alertmanager
 ---
 apiVersion: route.openshift.io/v1
 kind: Route
