@@ -12,6 +12,8 @@ kind: Alertmanager
 metadata:
   name: appmon-alertmanager
 spec:
+  image: "docker.io/dimssss/alertmanager:v0.17.0"
+  version: "v0.17.0"
   replicas: 3
   configSecret: appmon-alertmanager
   storage:

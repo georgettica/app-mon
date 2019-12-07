@@ -40,6 +40,8 @@ kind: Prometheus
 metadata:
   name: prometheus
 spec:
+  image: "docker.io/dimssss/prometheus:v2.7.1"
+  version: "v2.7.1"
   replicas: 3
   storage:
     volumeClaimTemplate:
