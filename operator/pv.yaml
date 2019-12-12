@@ -10,7 +10,7 @@ spec:
     storage: 100Gi
   nfs:
     path: /srv/nfs/user-vols/vol80
-    server: support1.none-c1b7.internal
+    server: support1.none-7629.internal
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: prom-storage
 ---
@@ -26,7 +26,7 @@ spec:
     storage: 100Gi
   nfs:
     path: /srv/nfs/user-vols/vol82
-    server: support1.none-c1b7.internal
+    server: support1.none-7629.internal
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: prom-storage
 ---
@@ -42,7 +42,7 @@ spec:
     storage: 100Gi
   nfs:
     path: /srv/nfs/user-vols/vol84
-    server: support1.none-c1b7.internal
+    server: support1.none-7629.internal
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: prom-storage
 ---
@@ -58,7 +58,7 @@ spec:
     storage: 100Gi
   nfs:
     path: /srv/nfs/user-vols/vol80
-    server: support1.none-c1b7.internal
+    server: support1.none-7629.internal
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: alertmanager-storage
 ---
@@ -74,7 +74,7 @@ spec:
     storage: 100Gi
   nfs:
     path: /srv/nfs/user-vols/vol82
-    server: support1.none-c1b7.internal
+    server: support1.none-7629.internal
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: alertmanager-storage
 ---
@@ -90,6 +90,6 @@ spec:
     storage: 100Gi
   nfs:
     path: /srv/nfs/user-vols/vol84
-    server: support1.none-c1b7.internal
+    server: support1.none-7629.internal
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: alertmanager-storage
