@@ -19,9 +19,9 @@ Usually thous tools are deployed and managed with concept of
  along side with OpenShift monitoring stack without braking our-of-the-box monitoring stack in disconnected environments. 
  
  
- ### Getting started 
+ ## Getting started 
  
-If you are running disconnected installation import the following images 
+### If you are running disconnected installation import the following images 
 
 1. quay.io/coreos/configmap-reload:v0.0.1
 2. quay.io/coreos/prometheus-config-reloader:v0.34.0
