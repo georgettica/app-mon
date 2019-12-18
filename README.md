@@ -22,21 +22,26 @@ Usually thous tools are deployed and managed with concept of
  ### Getting started 
  
 If you are running disconnected installation import the following images 
-```bash
-# Prometheus operator 
-quay.io/coreos/configmap-reload:v0.0.1
-quay.io/coreos/prometheus-config-reloader:v0.34.0
-quay.io/coreos/prometheus-operator:v0.34.0
-# Prometheus instance
-quay.io/prometheus/prometheus:v2.7.1
-# AlertManager instance
-quay.io/prometheus/alertmanager:v0.17.0
-# Grafana operator 
-quay.io/pb82/grafana-operator:latest
-quay.io/openshift/origin-grafana:4.2
-# Grafana instance 
-quay.io/integreatly/grafana_plugins_init:0.0.2
-```
+
+1. quay.io/coreos/configmap-reload:v0.0.1
+2. quay.io/coreos/prometheus-config-reloader:v0.34.0
+3. quay.io/coreos/prometheus-operator:v0.34.0
+4. quay.io/prometheus/prometheus:v2.7.1
+5. quay.io/prometheus/alertmanager:v0.17.0
+6. quay.io/pb82/grafana-operator:latest
+7. quay.io/openshift/origin-grafana:4.2
+8. quay.io/integreatly/grafana_plugins_init:0.0.2
+
+
+### In case of the disconnected deployment, update the following files with your own images 
+1. Update `--config-reloader-image=docker.io/dimssss/configmap-reload:v0.0.1` in file: `prometheus-operator/1.1-prom-operator-bundle.yaml`
+2. Update `--prometheus-config-reloader=docker.io/dimssss/prometheus-config-reloader:v0.34.0` in file: `prometheus-operator/1.1-prom-operator-bundle.yaml`  
+3. Update `image: docker.io/dimssss/prometheus-operator:v0.34.0` in file: `prometheus-operator/1.1-prom-operator-bundle.yaml`  
+4. Update `image: "docker.io/dimssss/prometheus:v2.7.1"` in file  `prometheus-operator/2.2-prometheus.yaml`
+5. Update `docker.io/dimssss/alertmanager:v0.17.0` in file  `prometheus-operator/3.2-alertmanager.yaml`
+6. Update `image: docker.io/dimssss/grafana-operator:latest` in file `grafana-operator/4.1-operator.yaml` 
+7. Update `--grafana-image=docker.io/dimssss/origin-grafana` and `--grafana-image-tag=4.2` in file `grafana-operator/4.1-operator.yaml`
+8. Update `--grafana-plugins-init-container-image=docker.io/dimssss/grafana_plugins_init` and `'--grafana-plugins-init-container-tag=0.0.2` in file `grafana-operator/4.1-operator.yaml`
 
 All manifests in that repo have hard-coded values. 
 None of the manifest are parameterized.
