@@ -1,4 +1,5 @@
-## This repo stores all required manifests and instructions for deploying `Application Monitoring Stack` in disconnected environments. The stack based on [Prometheus](https://github.com/coreos/prometheus-operator) and [Grafana](https://github.com/integr8ly/grafana-operator) operators and can be safely deployed  along side with default OpenShift Monitoring stack (which is based on the same operators).
+# Application Monitoring Stack for OpenShift
+This repo stores all required manifests and instructions for deploying `Application Monitoring Stack` in disconnected environments. The stack based on [Prometheus](https://github.com/coreos/prometheus-operator) and [Grafana](https://github.com/integr8ly/grafana-operator) operators and can be safely deployed  along side with default OpenShift Monitoring stack (which is based on the same operators).
 
 
 
