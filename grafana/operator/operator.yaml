@@ -16,10 +16,12 @@ spec:
       serviceAccountName: grafana-operator
       containers:
         - name: grafana-operator
-          image: quay.io/pb82/grafana-operator:latest
+          image: docker.io/dimssss/grafana-operator:latest
           args:
-            - '--grafana-image=quay.io/openshift/origin-grafana'
+            - '--grafana-image=docker.io/dimssss/origin-grafana'
             - '--grafana-image-tag=4.2'
+            - '--grafana-plugins-init-container-image=docker.io/dimssss/grafana_plugins_init'
+            - '--grafana-plugins-init-container-tag=0.0.2'
             - '--scan-all'
           ports:
           - containerPort: 60000
