@@ -81,5 +81,35 @@ By default the application monitoring stack will be deployed with the following
         role: alert-rules
         prometheus: appmon-prometheus
   ```
-  
+### Stack Deployment
+0. Create two OCP project 
+```yaml
+# Application monitoring project
+oc new-project appmon
+# Demo app project 
+oc new-project chuck
+``` 
 
+1.1. Deploy Prometheus Operator
+```bash
+oc create -f prometheus-operator/1.1-prom-operator-bundle.yaml
+```
+
+2.1. Optional - Create PV if required 
+```bash
+oc create -f prometheus-operator/2.1-pv.yaml
+```
+
+2.2. Deploy Prometheus cluster  
+```bash
+oc create -f prometheus-operator/2.2-prometheus.yaml
+```
+
+2.3. Create `service` and `route` for prometheus
+```bash
+oc create -f prometheus-operator/2.3-prom-service-route.yaml
+```
+3.1. Optional - Create AlertManager Secret. **Note, if you creating your own AlertManager secret, make sure update `prometheus-operator/3.2-alertmanager.yaml` file and remove the default secret** 
+```bash
+oc create -f prometheus-operator/3.1-alertmanager-secret.yaml
+```
