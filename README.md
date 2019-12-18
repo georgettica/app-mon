@@ -81,7 +81,8 @@ By default the application monitoring stack will be deployed with the following
         role: alert-rules
         prometheus: appmon-prometheus
   ```
-### Stack Deployment
+  
+### Prometheus  - Operator, Prometheus and AlertManager deployment
 
 #### 0.0 Create two OCP project 
 ```yaml
@@ -149,4 +150,42 @@ oc create -f prometheus-operator/4.1-service-monitor.yaml
 #### 5.1 Create `Rule`
 ```bash
 oc create -f prometheus-operator/5.1-rule.yaml
+```
+
+### Grafana  - Operator and Grafana instance deployment 
+
+#### Grafana CRDs  
+```bash
+oc create -f grafana-operator/1.1-grafana-crd.yaml
+oc create -f grafana-operator/1.2-grafana-dashboard-crd.yaml
+oc create -f grafana-operator/1.3-grafana-datasource-crd.yaml
+```
+
+#### Grafana Operator prerequisite
+```bash
+oc create -f grafana-operator/2.1-service_account.yaml
+oc create -f grafana-operator/2.2-role.yaml
+oc create -f grafana-operator/2.3-role_binding.yaml
+oc create -f grafana-operator/3.1-cluster_role.yaml
+oc create -f grafana-operator/3.2-cluster_role_binding.yaml
+```   
+
+#### Grafana Operator deployment
+```bash
+oc create -f grafana-operator/4.1-operator.yaml
+```
+
+#### Grafana instance deployment
+```bash
+oc create -f grafana-operator/5.1-grafana.yaml
+``` 
+
+#### Grafana DataSource
+```bash
+oc create -f /Users/dima/code/prom/grafana-operator/6.1-ds.yaml
+```
+
+#### Grafana Dashboard
+```bash
+oc create -f grafana-operator/7.1-dashboard.yaml
 ```
