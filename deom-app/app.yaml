@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name:  chuck
+  namespace: "chuck"
+  labels:
+    appmon: service-yes
+spec:
+  selector:
+    app: chuck
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    template: mysql-ephemeral
+  name: mysql-db
+  namespace: chuck
+spec:
+  selector:
+    app: chuck-mysql
+  type: ClusterIP
+  ports:
+    - name: mysql
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
+---
+kind: DeploymentConfig
+apiVersion: "v1"
+metadata:
+  labels:
+    app: chuck
+  name: chuck
+  namespace: chuck
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chuck
+        version: v1
+    spec:
+      containers:
+        - name: chuck
+          image: docker.io/dimssss/chuck-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: DB_HOST
+              value: "mysql-db"
+            - name: DB_NAME
+              value: "chuck"
+            - name: DB_USER
+              value: "chuck"
+            - name: DB_PASS
+              value: "chuck"
+---
+kind: DeploymentConfig
+apiVersion: "v1"
+metadata:
+  labels:
+    app: chuck-mysql
+  name: chuck-mysql
+  namespace: chuck
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: chuck-mysql
+    spec:
+      containers:
+        - name: mysql
+          image: registry.redhat.io/rhscl/mysql-57-rhel7:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_USER
+              value: "chuck"
+            - name: MYSQL_PASSWORD
+              value: "chuck"
+            - name: MYSQL_DATABASE
+              value: "chuck"
+
