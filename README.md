@@ -4,7 +4,7 @@ This repo stores all required manifests and instructions for deploying `Applicat
 ### Motivation 
 As for today OpenShift does not provides any tooling for application monitoring.
 As a result OpenShift users required to deploy their own monitoring stacks. 
-Nowadays, [Prometheus](https://prometheus.io) and [Grafna](https://grafana.com) 
+Nowadays [Prometheus](https://prometheus.io) and [Grafna](https://grafana.com) 
 are de-facto a standards tooling for cloud native monitoring. 
 Usually thous tools are deployed and managed with concept of 
 `Custom Resource Definitions` and `Custom Resource` instances
