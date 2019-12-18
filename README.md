@@ -90,26 +90,39 @@ oc new-project appmon
 oc new-project chuck
 ``` 
 
-1.1. Deploy Prometheus Operator
+#### 1.1 Deploy Prometheus Operator
 ```bash
 oc create -f prometheus-operator/1.1-prom-operator-bundle.yaml
 ```
 
-2.1. Optional - Create PV if required 
+#### 2.1 Optional - Create PV if required 
 ```bash
 oc create -f prometheus-operator/2.1-pv.yaml
 ```
 
-2.2. Deploy Prometheus cluster  
+#### 2.2 Deploy Prometheus cluster  
 ```bash
 oc create -f prometheus-operator/2.2-prometheus.yaml
 ```
 
-2.3. Create `service` and `route` for prometheus
+#### 2.3 Create `service` and `route` for prometheus
 ```bash
 oc create -f prometheus-operator/2.3-prom-service-route.yaml
 ```
-3.1. Optional - Create AlertManager Secret. **Note, if you creating your own AlertManager secret, make sure to update `prometheus-operator/3.2-alertmanager.yaml` file and remove the `appmon-alertmanager` secret from there** 
+
+#### 3.1 Optional - Create AlertManager Secret. **Note, if you creating your own AlertManager secret, make sure to update `prometheus-operator/3.2-alertmanager.yaml` file and remove the `appmon-alertmanager` secret from there** 
 ```bash
+# Create the AlertManager secret
 oc create -f prometheus-operator/3.1-alertmanager-secret.yaml
+```
+Edit the `prometheus-operator/3.2-alertmanager.yaml` and remove the following secret 
+```yaml
+kind: Secret
+metadata:
+  name: appmon-alertmanager
+  namespace: appmon
+apiVersion: v1
+data:
+  alertmanager.yaml: Z2xvYmFsOgogIHJlc29sdmVfdGltZW91dDogNW0Kcm91dGU6CiAgZ3JvdXBfYnk6IFsnam9iJ10KICBncm91cF93YWl0OiAzMHMKICBncm91cF9pbnRlcnZhbDogNW0KICByZXBlYXRfaW50ZXJ2YWw6IDEyaAogIHJlY2VpdmVyOiAnd2ViaG9vaycKcmVjZWl2ZXJzOgotIG5hbWU6ICd3ZWJob29rJwogIHdlYmhvb2tfY29uZmlnczoKICAtIHVybDogJ2h0dHA6Ly9hbGVydG1hbmFnZXJ3aDozMDUwMC8nCg==
+type: Opaque
 ```
