@@ -21,8 +21,6 @@ Usually thous tools are deployed and managed with concept of
  
  ### Getting started 
  
-
-#### Images for offline installation and whitening process
 If you are running disconnected installation import the following images 
 ```bash
 # Prometheus operator 
