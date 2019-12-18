@@ -189,3 +189,9 @@ oc create -f /Users/dima/code/prom/grafana-operator/6.1-ds.yaml
 ```bash
 oc create -f grafana-operator/7.1-dashboard.yaml
 ```
+
+### Demo app 
+```bash
+oc create -f deom-app/app.yaml
+``` 
+
