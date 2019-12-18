@@ -38,4 +38,15 @@ quay.io/openshift/origin-grafana:4.2
 quay.io/integreatly/grafana_plugins_init:0.0.2
 ```
 
+All manifests in that repo have hard-coded values. 
+None of the manifest are parameterized.
+And it's done by purpose. If you deciding to use this 
+repo for installing your Monitoring stack, please make sure you understand 
+each manifest and all related manifest values, 
+such as namespaces, roles, service accounts, role bindings, cluster role bindings, etc...
+By default the application monitoring stack will be deployed with the following 
+- Namespace: `appmon`
+- Service account for Prometheus Operator: `appmon-prometheus-operator`
+- Look for extra Prometheus Operator flags at Operator `Deployment` manifest here: `prometheus-operator/1.1-prom-operator-bundle.yaml` 
+
 

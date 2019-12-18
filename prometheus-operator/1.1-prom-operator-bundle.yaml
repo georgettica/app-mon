@@ -125,7 +125,6 @@ spec:
       containers:
       - args:
         - -deny-namespaces=openshift-monitoring
-#        - -manage-crds=false
         - --logtostderr=true
         - --config-reloader-image=docker.io/dimssss/configmap-reload:v0.0.1
         - --prometheus-config-reloader=docker.io/dimssss/prometheus-config-reloader:v0.34.0
