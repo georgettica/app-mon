@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grafana-operator
+  namespace: appmon
 spec:
   replicas: 1
   selector:
@@ -19,6 +20,7 @@ spec:
           args:
             - '--grafana-image=quay.io/openshift/origin-grafana'
             - '--grafana-image-tag=4.2'
+            - '--scan-all'
           ports:
           - containerPort: 60000
             name: metrics

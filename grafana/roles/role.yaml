@@ -3,6 +3,7 @@ kind: Role
 metadata:
   creationTimestamp: null
   name: grafana-operator
+  namespace: appmon
 rules:
   - apiGroups:
       - ""
