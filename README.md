@@ -44,6 +44,7 @@ And it's done by purpose. If you deciding to use this
 repo for installing your Monitoring stack, please make sure you understand 
 each manifest and all related manifest values, 
 such as namespaces, roles, service accounts, role bindings, cluster role bindings, etc...
+
 By default the application monitoring stack will be deployed with the following 
 - Namespace: `appmon`
 - Service account for Prometheus operator: `appmon-prometheus-operator`
