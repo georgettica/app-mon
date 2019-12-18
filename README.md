@@ -15,7 +15,7 @@ Usually thous tools are deployed and managed with concept of
  [is not allowed](https://docs.openshift.com/container-platform/3.11/install_config/prometheus_cluster_monitoring.html#supported-configuration) 
  to edit this Prometheus instance. 
  This repo explain how Prometheus and Grafana Operators could be installed  
- along side with OpenShift monitoring stack without braking our-of-the-box monitoring stack. 
+ along side with OpenShift monitoring stack without braking our-of-the-box monitoring stack in disconnected environments. 
  
    
 
