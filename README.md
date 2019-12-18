@@ -82,13 +82,22 @@ By default the application monitoring stack will be deployed with the following
         prometheus: appmon-prometheus
   ```
 ### Stack Deployment
-0. Create two OCP project 
+
+#### 0.0 Create two OCP project 
 ```yaml
 # Application monitoring project
 oc new-project appmon
 # Demo app project 
 oc new-project chuck
-``` 
+```
+
+#### 0.1 Edit the `appmon` and `chuck` namespaces and add `appmon: yes` label
+```yaml
+...
+  labels:
+    appmon: "yes"
+...
+```  
 
 #### 1.1 Deploy Prometheus Operator
 ```bash
@@ -125,4 +134,19 @@ apiVersion: v1
 data:
   alertmanager.yaml: Z2xvYmFsOgogIHJlc29sdmVfdGltZW91dDogNW0Kcm91dGU6CiAgZ3JvdXBfYnk6IFsnam9iJ10KICBncm91cF93YWl0OiAzMHMKICBncm91cF9pbnRlcnZhbDogNW0KICByZXBlYXRfaW50ZXJ2YWw6IDEyaAogIHJlY2VpdmVyOiAnd2ViaG9vaycKcmVjZWl2ZXJzOgotIG5hbWU6ICd3ZWJob29rJwogIHdlYmhvb2tfY29uZmlnczoKICAtIHVybDogJ2h0dHA6Ly9hbGVydG1hbmFnZXJ3aDozMDUwMC8nCg==
 type: Opaque
+```
+
+#### 3.2 Deploy AlertManager Cluster
+```bash
+oc create -f prometheus-operator/3.2-alertmanager.yaml
+```
+
+#### 4.1 Create `ServiceMonitor`
+```bash
+oc create -f prometheus-operator/4.1-service-monitor.yaml
+```
+
+#### 5.1 Create `Rule`
+```bash
+oc create -f prometheus-operator/5.1-rule.yaml
 ```
