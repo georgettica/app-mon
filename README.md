@@ -109,7 +109,7 @@ oc create -f prometheus-operator/2.2-prometheus.yaml
 ```bash
 oc create -f prometheus-operator/2.3-prom-service-route.yaml
 ```
-3.1. Optional - Create AlertManager Secret. **Note, if you creating your own AlertManager secret, make sure update `prometheus-operator/3.2-alertmanager.yaml` file and remove the default secret** 
+3.1. Optional - Create AlertManager Secret. **Note, if you creating your own AlertManager secret, make sure update `prometheus-operator/3.2-alertmanager.yaml` file and remove default secret from there** 
 ```bash
 oc create -f prometheus-operator/3.1-alertmanager-secret.yaml
 ```
