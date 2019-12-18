@@ -43,6 +43,7 @@ If you are running disconnected installation import the following images
 7. Update `--grafana-image=docker.io/dimssss/origin-grafana` and `--grafana-image-tag=4.2` in file `grafana-operator/4.1-operator.yaml`
 8. Update `--grafana-plugins-init-container-image=docker.io/dimssss/grafana_plugins_init` and `'--grafana-plugins-init-container-tag=0.0.2` in file `grafana-operator/4.1-operator.yaml`
 
+### Defaults 
 All manifests in that repo have hard-coded values. 
 None of the manifest are parameterized.
 And it's done by purpose. If you deciding to use this 
