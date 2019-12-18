@@ -12,7 +12,7 @@ Usually thous tools are deployed and managed with concept of
  By default OpenShift includes out-of-the-box Prometheus Operator 
  which is deploys Prometheus instance, but this instance is limited to scarp only 
  OpenShift/K8S related endpoints and end user 
- (is not allowed)[https://docs.openshift.com/container-platform/3.11/install_config/prometheus_cluster_monitoring.html#supported-configuration] 
+ [is not allowed](https://docs.openshift.com/container-platform/3.11/install_config/prometheus_cluster_monitoring.html#supported-configuration) 
  to edit this Prometheus instance. 
  This repo explain how Prometheus and Grafana Operators could be installed  
  along side with OpenShift monitoring stack without braking our-of-the-box monitoring stack. 
