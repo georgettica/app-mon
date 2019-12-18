@@ -52,7 +52,7 @@ By default the application monitoring stack will be deployed with the following
 - For extra Prometheus operator flags check the operator's `Deployment` manifest here: `prometheus-operator/1.1-prom-operator-bundle.yaml`
 - The Prometheus Operator deploying persistence Prometheus instance, as a result you've to make sure you've available 6 PVs in total. 3 PVs for Prometheus instance with `storageClassName: prom-storage` and 3 PVs for AlertManager with `storageClassName: alertmanager-storage`
 - Selectors 
-  ```bash
+  ```yaml
     serviceMonitorNamespaceSelector:
       matchExpressions:
         - key: appmon
