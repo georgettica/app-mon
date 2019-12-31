@@ -11,6 +11,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: Alertmanager
 metadata:
   name: appmon-alertmanager
+  namespace: appmon
 spec:
   image: "docker.io/dimssss/alertmanager:v0.17.0"
   version: "v0.17.0"
@@ -28,6 +29,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: appmon-alertmanager
+  namespace: appmon
 spec:
   ports:
   - name: web
