@@ -116,6 +116,11 @@ oc create -f prometheus-operator/1.1-prom-operator-bundle.yaml
 oc create -f prometheus-operator/2.1-pv.yaml
 ```
 
+Or patch current pv to suit our needs
+```bash
+./prometheus-operator/2.1-pv.sh
+```
+
 #### 2.2 Deploy Prometheus cluster  
 ```bash
 oc create -f prometheus-operator/2.2-prometheus.yaml
